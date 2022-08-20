@@ -53575,3 +53575,19 @@ input:readonly {
 .sortable button {
 	height: 45px !important;
 }
+
+.stars {
+    --percent: calc(var(--rating) / 5 * 100%);
+    font-size: 25px;
+    font-family: Times;
+    line-height: 1;
+}
+
+.stars::before {
+    content: "★★★★★";
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, #fc0 var(--percent), #ccc var(--percent));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

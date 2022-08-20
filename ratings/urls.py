@@ -8,4 +8,7 @@ app_name = 'ratings'
 
 
 urlpatterns = [
+    url(r'^$', RatingReviewsList, name='ratings_list'),
+    url(r'^delete-review/(?P<id>[-\w]+)/$', DeleteReview, name='delete_review'),
+    url(r'^view-review/(?P<id>[-\w]+)/$', ViewReview, name='view_review'),
 ]

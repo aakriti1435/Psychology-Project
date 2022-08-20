@@ -3,14 +3,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xl-3 col-xxl-4 col-sm-6">
-                <a href="">
+                <a href="{% url 'services:services_list' %}">
                     <div class="card gradient-bx text-white bg-blue rounded">
                         <div class="card-body">
                             <div class="media align-items-center">
                                 <div class="media-body">
                                     <p class="mb-1" style="font-weight:600;">Total Services</p>
                                     <div class="d-flex flex-wrap">
-                                        <h2 class="fs-40 font-w600 text-white mb-0 mr-3">0</h2>
+                                        <h2 class="fs-40 font-w600 text-white mb-0 mr-3">{{1|total_services}}</h2>
                                         <div>
                                         </div>
                                     </div>
@@ -43,14 +43,14 @@
                 </a>
             </div>
             <div class="col-xl-3 col-xxl-4 col-sm-6">
-                <a href="">
+                <a href="{% url 'ratings:ratings_list' %}">
                     <div class="card gradient-bx text-white bg-dark-bluee rounded">
                         <div class="card-body">
                             <div class="media align-items-center">
                                 <div class="media-body">
                                     <p class="mb-1" style="font-weight:600;">Total Reviews</p>
                                     <div class="d-flex flex-wrap">
-                                        <h2 class="fs-40 font-w600 text-white mb-0 mr-3">0</h2>
+                                        <h2 class="fs-40 font-w600 text-white mb-0 mr-3">{{1|total_ratings}}</h2>
                                     </div>
                                 </div>
                                 <span class="border rounded-circle p-4 icon-box">

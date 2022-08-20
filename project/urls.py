@@ -14,6 +14,9 @@ urlpatterns = [
     url('^accounts/', include('django.contrib.auth.urls')),
     path('backup/', include('backup.urls') , name="Back_up"),
     path('page/', include('page.urls') , name="page"),
+    path('contacts/', include('contact.urls') , name="contact"),
+    path('services/', include('services.urls') , name="services"),
+    path('ratings/', include('ratings.urls') , name="ratings"),
     url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}), 
     url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 
 ] 

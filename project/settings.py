@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'page',
     'django_db_logger',
     'backup',
+    'contact',
+    'services',
+    'ratings',
 ]
 
 MIDDLEWARE = [

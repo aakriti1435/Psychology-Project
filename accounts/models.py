@@ -33,7 +33,7 @@ Login History
 class LoginHistory(models.Model):
     user_ip = models.CharField( max_length=255, null=True, blank=True)
     user_agent = models.CharField(max_length=255, null=True, blank=True)
-    status = models.CharField(max_length=255, null=True, blank=True)
+    status = models.PositiveIntegerField(choices=LOGIN_STATUS, null=True, blank=True, default=LOGIN_SUCCESS)
     code = models.CharField(max_length=255, null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     user = models.CharField( max_length=255, null=True, blank=True)

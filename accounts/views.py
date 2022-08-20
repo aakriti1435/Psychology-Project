@@ -35,70 +35,33 @@ class LoginView(View):
         return render(request,'frontend/login.html' , {'activated' : 'login', "title":"Login"})
     
     def post(self,request,*args,**kwargs):
-        agent=request.META['HTTP_USER_AGENT']
-        IP=request.META.get("REMOTE_ADDR")
-        des= request.path
-        urls="http://"+IP+des
         email = request.POST.get("email")
         password = request.POST.get("password")
 
-        if not email:
-            feed = LoginHistory.objects.create(User_Ip=IP,User_agent=agent,State="Failed",Code=urls)
-            feed.save()
-            return render(request, 'frontend/login.html',{"email":email})
-        
-        if not password:
-            feed = LoginHistory.objects.create(User_Ip=IP,User_agent=agent,State="Failed",Code=urls,user=email)
-            feed.save()
-            return render(request, 'frontend/login.html',{"email":email})
-
+        history = LoginHistory.objects.create(
+            user_ip = request.META.get("REMOTE_ADDR"),
+            user_agent = request.META['HTTP_USER_AGENT'],
+            code = "http://" + request.META.get("REMOTE_ADDR") + request.path,
+            user = request.POST.get("email")
+        )
         if request.POST.get('remember_me')=='on':    
             request.session.set_expiry(7600) 
         user = authenticate(username=email, password=password)
         if not user:
-            feed = LoginHistory.objects.create(User_Ip=IP,User_agent=agent,State="Failed",Code=urls,user=email)
-            feed.save()
+            history.status = LOGIN_FAILURE
+            history.save()
             messages.error(request, 'Invalid login credentials')
             return render(request, 'frontend/login.html',{"email":email})
         
         if user.is_superuser and user.role_id == ADMIN:
             login(request, user)
-            feed = LoginHistory.objects.create(User_Ip=IP,User_agent=agent,State="Success",Code=urls,user=email)
-            feed.save()
-            user.session_id = request.session.session_key
-            user.save()
             messages.error(request, 'Login Successfully!')
             return redirect('admin:index')
-        elif user.role_id == USER:
-            if user.is_subscribed:
-                if user.state == ACTIVE:
-                    login(request, user)
-                    feed = LoginHistory.objects.create(User_Ip=IP,User_agent=agent,State="Success",Code=urls,user=email)
-                    feed.save()
-                    user.session_id = request.session.session_key
-                    user.save()
-                    messages.error(request, 'Login Successfully!')
-                    return redirect('users:user_profile_view',id=user.id)
-                elif user.state == INACTIVE:
-                    messages.error(request, 'Your account is not activated yet!')
-                    return render(request, 'frontend/login.html',{"email":email})
-                elif user.state == DELETED:
-                    messages.error(request, 'Your account is deleted by admin!')
-                    return render(request, 'frontend/login.html',{"email":email})
-            else:
-                if user.is_profile_setup:
-                    all_plans = SubscriptionPlans.objects.filter(is_membership=True).last()
-                    return render(request,'signup/payment.html',{"user":user,"all_plans":all_plans,"title":"Payment"})
-                else:
-                    return render(request,'user-dashboard/check-email.html', {"email":email})
-
-        login(request, user)
-        messages.error(request, 'Login Successfully!')
-        user.session_id = request.session.session_key
-        user.save()
-        feed = LoginHistory.objects.create(User_Ip=IP,User_agent=agent,State="Success",Code=urls,user=email)
-        feed.save()
-        return redirect('admin:index')
+        else:
+            history.status = LOGIN_FAILURE
+            history.save()
+            messages.error(request, 'Invalid login credentials')
+            return render(request, 'frontend/login.html',{"email":email})
 
 
 @login_required

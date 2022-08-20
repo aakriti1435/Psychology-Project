@@ -3,14 +3,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xl-3 col-xxl-4 col-sm-6">
-                <a href="{% url 'accounts:allusers' %}">
+                <a href="">
                     <div class="card gradient-bx text-white bg-blue rounded">
                         <div class="card-body">
                             <div class="media align-items-center">
                                 <div class="media-body">
                                     <p class="mb-1" style="font-weight:600;">Total Users</p>
                                     <div class="d-flex flex-wrap">
-                                        <h2 class="fs-40 font-w600 text-white mb-0 mr-3">{{1|total_users}}</h2>
+                                        <h2 class="fs-40 font-w600 text-white mb-0 mr-3">0</h2>
                                         <div>
                                         </div>
                                     </div>
@@ -24,14 +24,14 @@
                 </a>
             </div>
             <div class="col-xl-3 col-xxl-4 col-sm-6">
-                <a href="{% url 'teams:teams_list' %}">
+                <a href="">
                     <div class="card gradient-bx text-white bg-red rounded">
                         <div class="card-body">
                             <div class="media align-items-center">
                                 <div class="media-body">
                                     <p class="mb-1" style="font-weight:600;">Total Teams</p>
                                     <div class="d-flex flex-wrap">
-                                        <h2 class="fs-40 font-w600 text-white mb-0 mr-3">{{3|total_teams}}</h2>
+                                        <h2 class="fs-40 font-w600 text-white mb-0 mr-3">0</h2>
                                     </div>
                                 </div>
                                 <span class="border rounded-circle p-4 icon-box">
@@ -43,14 +43,14 @@
                 </a>
             </div>
             <div class="col-xl-3 col-xxl-4 col-sm-6">
-                <a href="{% url 'games:games_list' %}">
+                <a href="">
                     <div class="card gradient-bx text-white bg-dark-bluee rounded">
                         <div class="card-body">
                             <div class="media align-items-center">
                                 <div class="media-body">
                                     <p class="mb-1" style="font-weight:600;">Games</p>
                                     <div class="d-flex flex-wrap">
-                                        <h2 class="fs-40 font-w600 text-white mb-0 mr-3">{{3|total_games}}</h2>
+                                        <h2 class="fs-40 font-w600 text-white mb-0 mr-3">0</h2>
                                     </div>
                                 </div>
                                 <span class="border rounded-circle p-4 icon-box">
@@ -62,14 +62,14 @@
                 </a>
             </div>
             <div class="col-xl-3 col-xxl-4 col-sm-6">
-                <a href="{% url 'tournaments:tournaments_list' %}">
+                <a href="">
                     <div class="card gradient-bx text-white bg-secondary rounded">
                         <div class="card-body">
                             <div class="media align-items-center">
                                 <div class="media-body">
                                     <p class="mb-1" style="font-weight:600;">Tournaments</p>
                                     <div class="d-flex flex-wrap">
-                                        <h2 class="fs-40 font-w600 text-white mb-0 mr-3">{{2|total_tournaments}}</h2>
+                                        <h2 class="fs-40 font-w600 text-white mb-0 mr-3">0</h2>
                                     </div>
                                 </div>
                                 <span class="border rounded-circle p-4 icon-box">
@@ -82,14 +82,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <div class="card card-table">
-                    <div id="chart-container-revenue" data-url="{% url 'accounts:revenue_graph' %}"></div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="card card-table">
-                    <div id="pie-chart"></div>
+                    <div id="chart-container-revenue" data-url=""></div>
                 </div>
             </div>
         </div>
@@ -106,47 +101,3 @@
         }
     });
 </script>
-<script>
-    Highcharts.chart('pie-chart', {
-        chart: {
-			plotBackgroundColor: null,
-			plotBorderWidth: null,
-			plotShadow: false,
-            type: 'pie',
-        },
-        title: {
-            text: 'User Management Graph'
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-		plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                style: {
-                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                }
-            }
-        }
-    },
-        series: [{
-            name: 'Brands',
-            colorByPoint: true,
-			showInLegend: true,
-            data: [{
-                name: 'Active Users',
-				color:'#ff6d17',
-                y: {{1| total_active_users}}
-            },{
-                name: 'In-Active Users',
-				color:'#fab103ff',
-                y: {{1| total_inactive_users}}
-            }]
-			
-        }]
-    });
-  </script>

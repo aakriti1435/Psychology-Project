@@ -1,0 +1,142 @@
+{% include 'frontend/includes/header.html' %} {% load static %}
+<link
+	rel="stylesheet"
+	href="{% static 'frontend-asset/css/pages-css/step.css' %}"
+/>
+<!--Home Banner Section-->
+<style>
+	.social-link li a {
+		border: 1px solid blue;
+	}
+    .step-page {
+        padding: 50px 0 !important;
+    }
+</style>
+<div class="signup-page step-page">
+	<div class="container">
+		<div class="form-wrapper text-center">
+			<h1 class="mb-3" style="color: #1793ff">Contact Us</h1>
+			<div class="form-inner">
+				<form
+					id="contact-us"
+					method="POST"
+					class="contact-us-form login-form"
+				>
+					{% csrf_token %}
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    onkeypress="return /[a-zA-Z\s]/i.test(event.key)"
+                                    placeholder="Enter First Name"
+                                    name="first_name"
+                                    maxlength="50"
+                                />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    onkeypress="return /[a-zA-Z\s]/i.test(event.key)"
+                                    placeholder="Enter Last Name"
+                                    name="last_name"
+                                    maxlength="50"
+                                />
+                            </div>
+                        </div>
+                    </div>
+					<div class="form-group">
+						<input
+							type="text"
+							class="form-control"
+							onkeypress="return /[0-9]/i.test(event.key)"
+							maxlength="15"
+							minlength="5"
+							placeholder="Enter Phone Number"
+							name="phone_number"
+						/>
+					</div>
+					<div class="form-group">
+						<input
+							type="text"
+							maxlength="50"
+							name="email"
+							class="form-control"
+							placeholder="Enter email"
+						/>
+					</div>
+					<div class="form-group">
+						<textarea class="form-control" name="message" rows="4" placeholder="Please enter message"></textarea>
+					</div>
+					<div class="button-wrap">
+						<button class="btn btn-theme secondary-btn w-100 mt-4">
+							Submit
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% include 'frontend/includes/footer.html' %}
+<script type="text/javascript">
+	$("#contact-us").validate({
+		rules: {
+			first_name: {
+				required: true,
+				normalizer: function (value) {
+					return $.trim(value);
+				},
+			},
+			last_name: {
+				required: true,
+				normalizer: function (value) {
+					return $.trim(value);
+				},
+			},
+			email: {
+				required: true,
+				normalizer: function (value) {
+					return $.trim(value);
+				},
+				email: true,
+			},
+			phone_number: {
+				required: true,
+				normalizer: function (value) {
+					return $.trim(value);
+				},
+				minlength: 5,
+				maxlength: 15,
+			},
+			message: {
+				required: true,
+				normalizer: function (value) {
+					return $.trim(value);
+				},
+			},
+		},
+		messages: {
+			first_name: {
+				required: "Please enter first name",
+			},
+			last_name: {
+				required: "Please enter last name",
+			},
+			email: {
+				required: "Please enter email",
+			},
+			phone_number: {
+				required: "Please enter phone number",
+			},
+			message: {
+				required: "Please enter the message",
+			},
+		},
+	});
+</script>

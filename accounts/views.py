@@ -32,7 +32,6 @@ class LogOutView(View):
 
 class LoginView(View):
     def get(self,request,*args,**kwargs):
-        print(User.objects.get(id=1).email)
         return render(request,'frontend/login.html' , {'activated' : 'login', "title":"Login"})
     
     def post(self,request,*args,**kwargs):

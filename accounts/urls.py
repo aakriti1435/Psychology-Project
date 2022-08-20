@@ -10,7 +10,6 @@ urlpatterns = [
 
     ## Index Graph and Authentication
     url(r'^user-graph/$', UserGraph, name='user_graph'),
-    url(r'^revenue-graph/$', RevenueGraph, name='revenue_graph'),
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^logout/$', LogOutView.as_view(), name='logout'),
 

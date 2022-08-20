@@ -9,16 +9,8 @@
     <div class="container">
         <div class="img-search">
             <a href="{% url 'frontend:index' %}" class="logo">
-                <img src="{% static 'frontend-asset/images/banner-logo.png' %}" alt="">
             </a>
             <div class="search-wrapper">
-                <form action="{% url 'teams:search_teams' %}" method="GET">
-                    <div class="form-group">
-                        <input type="text" name="search" {% if search %} value="{{search}}" {% else %} 
-                            placeholder="Search for teams by city, state or team name" {% endif %}
-                            class="form-control">
-                    </div>
-                </form>
             </div>
         </div>
     </div>
@@ -27,51 +19,6 @@
 <section class="speciality">
     <div class="container">
         <div class="row justify-content-center" style="margin-left: 33px;">
-            {% comment %} <div class="col-lg-3 col-6 mb-lg-0 mb-3">
-                <div class="speciality-wrap d-flex align-items-center">
-                    <div class="img-wrap">
-                        <img src="{% static 'frontend-asset/images/gun.png' %}" alt="">
-                    </div>
-                    <div class="text-wrap">
-                        <h4>{{1|total_states}}</h4>
-                        <p>States</p>
-                    </div>
-                </div>
-            </div> {% endcomment %}
-            <div class="col-lg-3 col-6 mb-lg-0 mb-3">
-                <div class="speciality-wrap d-flex align-items-center">
-                    <div class="img-wrap">
-                        <img src="{% static 'frontend-asset/images/cup.png' %}" alt="">
-                    </div>
-                    <div class="text-wrap">
-                        <h4>{{1|total_tournaments}}</h4>
-                        <p>Tournaments</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 mb-lg-0 mb-3">
-                <div class="speciality-wrap d-flex align-items-center">
-                    <div class="img-wrap">
-                        <img src="{% static 'frontend-asset/images/users.png' %}" alt="">
-                    </div>
-                    <div class="text-wrap">
-                        <h4>{{3|total_teams}}</h4>
-                        <p>Teams</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6 mb-lg-0 mb-3">
-                <div class="speciality-wrap d-flex align-items-center">
-                    <div class="img-wrap">
-                        <img src="{% static 'frontend-asset/images/bat.png' %}" alt="">
-                    </div>
-                    <div class="text-wrap">
-                        <h4>{{1|total_games}}</h4>
-                        <p>Games</p>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </section>

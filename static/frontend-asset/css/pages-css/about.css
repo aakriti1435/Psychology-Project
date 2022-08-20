@@ -1,5 +1,5 @@
 body{
-    background-image: url(../../images/banner-about.jpg);
+    background-image: url('https://www.yu.edu/sites/default/files/psychology-881350654.jpg');
 }
 .page-body::before {
     content: "";

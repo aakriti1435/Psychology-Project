@@ -1,18 +1,23 @@
-{% include 'frontend/includes/header.html' %}
-{% load static %}
+{% include 'frontend/includes/header.html' %} {% load static %} {% load extras
+%}
 <!-- Style Css -->
-<link rel="stylesheet" href="{% static 'frontend-asset/css/pages-css/about.css' %}" />
+<link
+	rel="stylesheet"
+	href="{% static 'frontend-asset/css/pages-css/about.css' %}"
+/>
 <!--Home Banner Section-->
-
 <section class="about-section section-ptb pb-0">
-    <div class="container">
-        <div class="about-wrapper text-center">
-            <h1>ABOUT US</h1>
-            <div class="text-wrap">
-                <p>{% if content %}{{content.content|safe}}{% else %}No Data Found{% endif %}</p>
-            </div>
-        </div>
-    </div>
+	<div class="container">
+		<div class="about-wrapper text-center">
+			<h1>ABOUT US</h1>
+			<div class="text-wrap">
+				<p>
+					{% if content %}{{content.content|safe}}{% else %}No Data
+					Found{% endif %}
+				</p>
+			</div>
+		</div>
+	</div>
 </section>
 
 {% include 'frontend/includes/footer.html' %}

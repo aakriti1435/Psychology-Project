@@ -5,6 +5,7 @@ __pycache__/
 
 sql_files
 env/
+migrations/
 
 # C extensions
 *.so

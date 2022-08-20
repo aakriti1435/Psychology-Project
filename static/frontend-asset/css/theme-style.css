@@ -27,7 +27,12 @@ body {
     z-index: 1;
 }
 
-
+.navbar-logo p {
+    color: #fff;
+    font-size: 25px;
+    font-weight: 500;
+    padding: 25px 10px 10px 10px;
+}
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 800;
@@ -39,7 +44,7 @@ img {
 }
 
 a:hover {
-    color: #ff7116;
+    color: cornflowerblue;
     text-decoration: none;
 }
 
@@ -422,7 +427,7 @@ input[type="checkbox"]:checked+label::before {
 }
 
 .social-link li a:hover {
-    background-color: #ff7116;
+    background-color: cornflowerblue;
     color: #fff;
 }
 
@@ -454,7 +459,7 @@ input[type="checkbox"]:checked+label::before {
 }
 
 .inner-page.page-body [class*="navbar-expand"] .navbar-nav .nav-item .nav-link {
-    color: #000;
+    color: #fff;
 }
 
 .inner-page.page-body .social-link li a {
@@ -465,14 +470,14 @@ input[type="checkbox"]:checked+label::before {
 
 .footer-bottom p {
     font-size: 14px;
-    color: #000000;
+    color: #fff !important;
     font-weight: 600;
     margin: 0;
 }
 
 .footer-bottom {
     padding: 10px 0;
-    background: #f1ca3f;
+    background: midnightblue;
     z-index: 1;
 }
 
@@ -499,7 +504,7 @@ input[type="checkbox"]:checked+label::before {
 
     [class*="navbar-expand"] .navbar-nav .nav-item .nav-link {
         font-size: 16px;
-        color: #000;
+        color: #fff;
     }
 
     .footer-cta .call-to-action-inner h3 {

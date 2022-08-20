@@ -81,6 +81,12 @@
                             <span class="nav-text">Dashboard</span>
                         </a>
                     </li>
+                    <li {% if head_title == "Services Management" %}class="mm-active"{% endif %}>
+                        <a href="{% url 'services:services_list' %}">
+                            <i class="far fa-ballot-check"></i>
+                            <span class="nav-text ml-1">Services</span>
+                        </a>
+                    </li>
                     <li {% if head_title == "Contacts Management" %}class="mm-active"{% endif %}>
                         <a href="{% url 'contact:contacts_list' %}">
                             <i class="fas fa-address-book"></i>

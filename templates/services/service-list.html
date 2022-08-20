@@ -11,7 +11,7 @@
                     <div class="card-header d-flex justify-content-between align-items-center card-header-custom">
                         <h4 class="card-title">Services Management</h4>
                         <div class="addlocation">
-                            <a href="">Add<i class="far fa-plus ml-1"></i></a>
+                            <a href="{% url 'services:add_service' %}">Add<i class="far fa-plus ml-1"></i></a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -43,7 +43,7 @@
                                                 <td>{{service.id}}</td>
                                                 <td>{{service.title}}</td>
                                                 <td>{{service.description | truncatechars:80 |safe}}</td>
-                                                <td>{{service.price|floatformat:2}}</td>
+                                                <td>₹{{service.price|floatformat:2}}</td>
                                                 <td>
                                                     <script>
                                                         var d = ConvertGTime("{{ service.created_on|date:'Y-m-d' }}","{{ service.created_on|time:'H:i' }}");
@@ -52,9 +52,9 @@
                                                 </td>
                                                 <td>
                                                     <div class="d-flex">
-                                                        <a href="" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
-                                                        <a href="" class="btn btn-success shadow btn-xs sharp mr-1"><i class="fa fa-eye"></i></a>
-                                                        <a onclick="return confirm('Are you sure to delete this service?')" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                                        <a href="{% url 'services:edit_service' service.id %}" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+                                                        <a href="{% url 'services:view_service' service.id %}" class="btn btn-success shadow btn-xs sharp mr-1"><i class="fa fa-eye"></i></a>
+                                                        <a onclick="return confirm('Are you sure to delete this service?')" href="{% url 'services:delete_service' service.id %}" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
                                                     </div>
                                                 </td>
                                             </tr>

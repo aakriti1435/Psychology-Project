@@ -8,8 +8,11 @@ app_name = 'services'
 
 
 urlpatterns = [
+
     url(r'^$', ServicesList, name='services_list'),
-    # url(r'^contact-us/$', ContactFormView, name='contact_form'),
-    # url(r'^delete-contact/(?P<id>[-\w]+)/$', DeleteContact, name='delete_contact'),
-    # url(r'^view-contact/(?P<id>[-\w]+)/$', ViewContact, name='view_contact'),
+    url(r'^add-service/$', AddService, name='add_service'),
+    url(r'^delete-service/(?P<id>[-\w]+)/$', DeleteService, name='delete_service'),
+    url(r'^view-service/(?P<id>[-\w]+)/$', ViewService, name='view_service'),
+    url(r'^edit-service/(?P<id>[-\w]+)/$', EditService, name='edit_service'),
+    
 ]

@@ -1,0 +1,119 @@
+{% include 'admin-includes/header.html' %}
+{% load static %}
+{% block content %}		
+
+<div class="content-body">
+    <!-- row -->
+    <div class="container-fluid">	
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-custom">
+                    <div class="card-header d-flex justify-content-between align-items-center card-header-custom">
+                        <h4 class="card-title">Transactions</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <form action="{% url 'accounts:search_transactions' %}" method="GET">
+                                <table class="sortable table table-responsive-md ">
+                                    <thead>
+                                        <tr>
+                                            <th><strong>Id</strong></th>
+                                            <th><strong>Amount</strong></th>
+                                            <th><strong>Currency</strong></th>
+                                            <th><strong>Payer</strong></th>
+                                            <th><strong>Payment Status</strong></th>
+                                            <th><strong>Type</strong></th>
+                                            <th><strong>Created On</strong></th>
+                                            <th><strong>Action</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input style="width: 70px;" type="text" value="{{id}}" class="form-control" name="id"></td>
+                                            <td><input type="text" value="{{amount}}" class="form-control" name="amount"></td>
+                                            <td><input type="text" value="{{currency}}" class="form-control" name="currency"></td>
+                                            <td><input type="text" value="{{created_by}}" class="form-control" name="created_by"></td>
+                                            <td>
+                                                <select class="form-control" name="payment_status" onchange="this.form.submit()">
+                                                    <option  value=""></option>
+                                                    <option {% if payment_status == '1' %} selected {% endif %} value="1">Success</option>
+                                                    <option {% if payment_status == '0' %} selected {% endif %} value="0">Failed</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" name="type_id" onchange="this.form.submit()">
+                                                    <option  value=""></option>
+                                                    <option {% if type_id == '1' %} selected {% endif %} value="1">Membership</option>
+                                                    <option {% if type_id == '2' %} selected {% endif %} value="2">Team Claimed</option>
+                                                </select>
+                                            </td>
+                                            <td><input type="date" value="{{created_on}}" onchange="this.form.submit()" class="position-relative form-control" name="created_on"></td>
+                                            <td><button type="submit" class="btn btn-dark savebtn">Search</button></td>
+                                        </tr>
+                                    {% if transactions %}
+                                        {% for transact in transactions %}
+                                            <tr>
+                                                <td>{{transact.id}}</td>
+                                                <td>${{transact.amount}}</td>
+                                                <td style="text-transform: uppercase;">{{transact.currency}}</td>
+                                                <td><a href="{% url 'accounts:view_user' transact.created_by.id %}">{{transact.created_by.full_name}}</a></td>
+                                                
+                                                {% if transact.payment_status == 1 %}
+                                                    <td><span style="width:100px" class="btn btn-success p-1 pl-2 pr-2">Success</span></td>
+                                                {% else %}
+                                                    <td><span style="width:100px" class="btn btn-danger p-1 pl-2 pr-2">Failed</span></td>
+                                                {% endif %}
+                                                {% if transact.type_id == 1 %}
+                                                    <td><span style="width:150px" class="btn btn-secondary p-1 pl-2 pr-2">Membership</span></td>
+                                                {% else %}
+                                                    <td><span style="width:150px" class="btn btn-info p-1 pl-2 pr-2">Team Claimed</span></td>
+                                                {% endif %}
+                                                <td>
+                                                    <script>
+                                                        var d = ConvertGTime("{{ transact.created_on|date:'Y-m-d' }}", "{{ transact.created_on|time:'H:i' }}");
+                                                        document.write(d);
+                                                    </script>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a href="{% url 'accounts:transaction_view' transact.id %}" class="btn btn-success shadow btn-xs sharp mr-1"><i class="fa fa-eye"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                    <td colspan="7" align="center">No Data Found</td>
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </form>
+                            {% if transactions.has_other_pages %}
+							<ul class="pagination">
+								{% if transactions.has_previous %}
+								<li><a href="?page={{ transactions.previous_page_number }}">&laquo;</a></li>
+								{% else %}
+								<li class="disabled"><span>&laquo;</span></li>
+								{% endif %}
+								{% for i in transactions.paginator.page_range %}
+								{% if transactions.number == i %}
+								<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+								{% else %}
+								<li><a href="?page={{ i }}">{{ i }}</a></li>
+								{% endif %}
+								{% endfor %}
+								{% if transactions.has_next %}
+								<li><a href="?page={{ transactions.next_page_number }}">&raquo;</a></li>
+								{% else %}
+								<li class="disabled"><span>&raquo;</span></li>
+								{% endif %}
+							</ul>
+							{% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% include 'admin-includes/footer.html' %}

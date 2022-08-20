@@ -1,0 +1,35 @@
+{% load static %}
+<div class="profile_picture position-relative">
+    <div class="ga-profileimg">
+        {% if request.user.profile_pic %}
+        <img src="{{ request.user.profile_pic.url }}" alt="image">
+        {% else %}
+        <img src="{% static 'admin-asset/images/dp.png' %}" alt="image">
+        {% endif %}
+    </div>
+    <h4>{{request.user.full_name}}</h4>
+    <p>{{request.user.email}}</p>
+</div>
+<ul>
+    <li>
+        <a href="{% url 'users:user_profile_view' request.user.id %}" class=""><i class="far fa-user"></i> My Profile </a>
+    </li>
+    <li>
+        <a href="{% url 'users:edit_user_profile_view' request.user.id %}" class=""><i class="far fa-user-edit"></i> Edit Profile </a>
+    </li>
+    <li>
+        <a href="{% url 'users:user_payment_cards' %}" class=""><i class="far fa-cog"></i> Payment Methods</a>
+    </li>
+    <li>
+        <a href="{% url 'users:user_teams_list' %}" class=""><i class="far fa-users"></i> My Teams</a>
+    </li>
+    <li>
+        <a href="{% url 'users:user_subscriptions' %}" class=""><i class="far fa-credit-card"></i> Subscriptions</a>
+    </li>
+    <li>
+        <a href="{% url 'users:user_account_settings' %}" class=""><i class="far fa-cog"></i> Change Password</a>
+    </li>
+    <li>
+        <a href="{% url 'accounts:logout' %}"><i class="far fa-sign-out-alt"></i> Logout</a>
+    </li>
+</ul>

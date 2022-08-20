@@ -1,0 +1,27 @@
+{% load static %}
+</main>
+<!--Footer Here-->
+<footer class="footer">
+    <div class="container">
+        <ul class="social-link text-center">
+            <li><a href="https://www.facebook.com/SoftballSource/" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="https://www.instagram.com/softballsource/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="https://twitter.com/SourceSoftball" target="_blank"><i class="fab fa-twitter"></i></a></li>
+        </ul>
+    </div>
+</footer>
+<div class="footer-bottom text-center">
+    <div class="container">
+        <p>
+            <a target="_blank" href="{% url 'frontend:privacy_policy' %}" title="Privacy Policy">Privacy Policy</a> | 
+            &copy; <script>document.write(new Date().getFullYear());</script> Source Sports LLC
+        </p>
+    </div>
+</div>
+<!-- common -->
+<script src="{% static 'admin-asset/js/jquery.min.js' %}"></script>
+<script src="{% static 'frontend-asset/js/common.js' %}"></script>
+<script src="{% static 'admin-asset/js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'admin-asset/js/additional-methods.min.js' %}"></script>
+</body>
+</html>

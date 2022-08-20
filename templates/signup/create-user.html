@@ -1,0 +1,167 @@
+{% include 'signup/includes/header-signup.html' %}
+{% load static %}
+<style>
+    .error{
+        color:red;
+    }
+    .eye {
+        position: absolute;
+        top: 22px;
+        right: 27px;
+    }
+    .password{
+        position:relative;
+    }
+    .er{
+        color: red;
+        padding: 0px !important;
+    }
+</style>
+<div class="signup-page step-page step-page-new">
+    <div class="container">
+        <div class="form-wrapper text-center">
+            <h1>Additional Information</h1>
+            <h5>Tell us a little more about yourself</h5>
+            <p>Step 2 of 3</p>
+            <div class="form-inner">
+                <form id="user-form" action="{% url 'users:create_user' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="user" value="{{user.id}}">
+                    <div class="form-group">
+                        <input type="text" class="form-control" onkeypress="return /[a-zA-Z\s]/i.test(event.key)" placeholder="Enter First Name" name="first_name" maxlength="20">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" onkeypress="return /[a-zA-Z\s]/i.test(event.key)" placeholder="Enter Last Name" name="last_name"  maxlength="20">
+                    </div>
+                    <div class="form-group">
+                        {% if user.mobile_no %}
+                        <input type="text" class="form-control" onkeypress="return /[0-9]/i.test(event.key)" value="{{user.mobile_no}}" maxlength="15" minlength="5" readonly  placeholder="Enter Mobile Number" name="mobile_no">
+                        {% else %}
+                        <input type="text" class="form-control" onkeypress="return /[0-9]/i.test(event.key)" id="mobile_no" maxlength="15" minlength="5"  placeholder="Enter Mobile Number" name="mobile_no">
+                        <p class="er d-none" ></p>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <input type="text" maxlength="50" name="email" class="form-control" {% if user.email %}value="{{user.email}}" readonly {% endif %} placeholder="Enter email">
+                    </div>
+                    <div class="form-group password">
+                        <input type="password" name="password" class="form-control mb-0" id="password"
+                            placeholder="Enter Password" required  maxlength="20">
+                        <span id="password" type="checkbox" data-attr="password" class="eyeicon">
+                            <i class="eye fas fa-eye-slash"></i>
+                        </span>
+                    </div>
+                    <div class="button-wrap">
+                        <button type="submit" class="btn btn-theme secondary-btn w-100">Continue to Payment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'frontend/includes/footer.html' %}
+<script type="text/javascript">
+$(document).ready(function () {
+    $("#mobile_no").keyup(function () {
+        var mobile_no = $('#mobile_no').val();
+        if (mobile_no != '' && mobile_no != 'undefined' && mobile_no != ' ') {
+            $.ajax({
+                url: "{% url 'accounts:mobile_validation' %}",
+                type: 'GET',
+                data: { 'mobile_no': mobile_no },
+                success: function (data) {
+                    if (data.exists == 0) {
+                        $(".er").html("");
+                        $('.er').addClass("d-none");
+                        $(".btn").prop('disabled', false);
+                    }
+                    else{
+                        $(".er").html("Mobile Number Already exists");
+                        $('.er').removeClass("d-none");
+                        $(".btn").prop('disabled', true);
+                    }
+                }
+            });
+        }
+        else {
+            $(".er").html("");
+            $('.er').addClass("d-none");
+            $(".btn").prop('disabled', false);
+        }
+    });
+});
+</script>
+<script type="text/javascript">
+    $(document).on('click', '.eyeicon', function () {
+        var x = document.getElementById($(this).attr("data-attr"));
+        if (x.getAttribute('type') == "password") {
+            $(this).find(".eye").removeClass("fas fa-eye-slash");
+            $(this).find(".eye").addClass("fas fa-eye");
+            x.removeAttribute("type");
+            x.setAttribute("type", "text");
+        } else {
+            x.removeAttribute("type");
+            x.setAttribute('type', 'password');
+            $(this).find(".eye").removeClass("fas fa-eye");
+            $(this).find(".eye").addClass("fas fa-eye-slash");
+        }
+    })
+</script>
+<script type="text/javascript">
+    $("#user-form").validate({
+        rules: {
+            email: {
+                required: true,
+                email: true,
+                normalizer: function( value ) {
+                    return $.trim( value );
+                }
+            },
+            first_name:{
+                required: true,
+                normalizer: function( value ) {
+                    return $.trim( value );
+                }
+            },
+            last_name:{
+                required: true,
+                normalizer: function( value ) {
+                    return $.trim( value );
+                }
+            },
+            mobile_no:{
+                required: true,
+                minlength: 5,
+                maxlength: 15,
+                normalizer: function( value ) {
+                    return $.trim( value );
+                }
+            },
+            password:{
+                required: true,
+                minlength: 8,
+                maxlength: 15,
+                normalizer: function( value ) {
+                    return $.trim( value );
+                }
+            }
+        },
+        messages: {
+            email: {
+                required: "Please enter email",
+            },
+            first_name: {
+                required: "Please enter first name",
+            },
+            last_name: {
+                required: "Please enter last name",
+            },
+            mobile_no: {
+                required: "Please enter mobile number",
+            },
+            password:{
+                required: "Please enter password",
+            }           
+        }
+    });
+</script>

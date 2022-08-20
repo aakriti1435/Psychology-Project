@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="The central resource for information about travel softball teams in North America" />
+    <meta name="author" content="">
+    <title>{% if title %}{{title}} | {% endif %}Softball Source</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'frontend-asset/images/favicon.ico' %}" />
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6WBSJJ63C3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6WBSJJ63C3');
+    </script>
+    
+    <!-- Bootstrap Css -->
+    <link rel="stylesheet" href="{% static 'frontend-asset/css/bootstrap.min.css' %}">
+    <!-- Plugins -->
+    <link rel="stylesheet" href="{% static 'frontend-asset/css/helpers-plugin.css' %}" />
+    <!-- Style Css -->
+    <link rel="stylesheet" href="{% static 'frontend-asset/css/theme-style.css' %}" />
+    <!-- fontawesome Css -->
+    <link rel="stylesheet" href="{% static 'frontend-asset/fonts/fontawesome/css/all.min.css' %}" />
+    <!-- style Css -->
+    <link rel="stylesheet" href="{% static 'frontend-asset/css/pages-css/join.css' %}" />
+    <link rel="stylesheet" href="{% static 'frontend-asset/css/flash.css' %}" />
+    <!-- jquery JS -->
+    <!-- bootstrap JS -->
+    <script src="{% static 'frontend-asset/js/jquery.slim.min.js' %}"></script>
+    <script src="{% static 'frontend-asset/js/bootstrap.bundle.min.js' %}"></script>
+</head>
+
+<body class="page-body home-page">
+    <header class="automotive-header-transparent">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'frontend:index' %}">
+                    <img src="{% static 'frontend-asset/images/logo.png' %}" alt="Travel Softball">
+                </a>
+                <button id="nav-icon2" class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="search-wrapper">
+                        <form action="{% url 'teams:search_teams' %}" method="GET">
+                            <div class="form-group">
+                                <input type="text" name="search" {% if search %} value="{{search}}" {% else %} 
+                                    placeholder="Search for teams by city, state or team name" {% endif %}
+                                    class="form-control">
+                            </div>
+                        </form>
+                    </div>
+                    <ul class="navbar-nav ml-lg-auto align-items-center mr-lg-20 order-2 order-lg-1">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'frontend:abouts' %}">About Us</a>
+                        </li>
+                        {% if not user.is_authenticated %}
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'users:check_email' %}">Sign Up</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            {% if request.user.first_name %}
+                            <a href="{% url 'users:user_profile_view' request.user.id %}" class="btn rounded-circle header-btns">{{request.user.first_name|slice:":1"}}{{request.user.last_name|slice:":1"}}</a>
+                            {% endif %}
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- Start Page Wrapper -->
+    <main class="page-wrapper">
+    {% if messages %}
+        <div class="flash animate--drop-in-fade-out">
+        {% for message in messages %}
+            <div class="flash__icon">
+                <i class="icon far fa-check-circle"></i>
+            </div>
+            
+            <p class="flash__body">
+                {{ message }}
+            </p>
+            {% endfor %}
+        </div>
+    {% endif %}

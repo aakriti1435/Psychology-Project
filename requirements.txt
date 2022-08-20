@@ -1,0 +1,11 @@
+django
+pymysql
+python-environ
+django-rest-framework
+django-ckeditor==6.1.0
+djangorestframework-jwt==1.11.0
+python-dateutil==2.8.2
+pillow
+markdown
+django-crontab
+django-db-logger

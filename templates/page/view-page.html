@@ -1,0 +1,67 @@
+{% include 'admin-includes/header.html' %}
+{% load static %}
+{% block content %}
+<div class="content-body">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-xl-12">
+            <div class="card">
+               <div class="card-body">
+                  <div class="profile-tab d-flex position-relative">
+                     <div class="profile-personal-info w-100">
+                        <h4 class="text-primary mb-4">Page Information</h4>
+                        <div class="row mb-3 mb-sm-2">
+                           <div class="col-12 col-sm-4 col-lg-3">
+                              <h5 class="f-w-500">Title <span class="d-none d-sm-block float-sm-right">:</span>
+                              </h5>
+                           </div>
+                           <div class="col-12 col-sm-8 col-lg-9"><span>{{page.title}}</span>
+                           </div>
+                        </div>
+                        <div class="row mb-3 mb-sm-2">
+                           <div class="col-12 col-sm-4 col-lg-3">
+                              <h5 class="f-w-500">Type <span class="d-none d-sm-block float-sm-right">:</span>
+                              </h5>
+                           </div>
+                           {% if page.type_id == 1 %}
+                           <div class="col-12 col-sm-8 col-lg-9"><span>Terms & Conditions</span>
+                              {% elif page.type_id == 2 %}
+                              <div class="col-12 col-sm-8 col-lg-9"><span>Privacy Policy</span>
+                                 {% elif page.type_id == 3 %}
+                                 <div class="col-12 col-sm-8 col-lg-9"><span>About Us</span>
+                                    {% endif %}
+                                    </div>
+                                 </div>
+                                 <div class="row mb-3 mb-sm-2">
+                                    <div class="col-12 col-sm-4 col-lg-3">
+                                       <h5 class="f-w-500">Created On <span class="d-none d-sm-block float-sm-right">:</span>
+                                       </h5>
+                                    </div>
+                                    <div class="col-12 col-sm-8 col-lg-9"><span>
+                                          <script>
+                                             var d = ConvertGTime("{{ page.created_on|date:'Y-m-d' }}", "{{ page.created_on|time:'H:i' }}");
+                                             document.write(d);
+                                          </script>
+                                       </span>
+                                    </div>
+                                 </div>
+                                 <div class="row mb-3 mb-sm-2">
+                                    <div class="col-12 col-sm-4 col-lg-3">
+                                       <h5 class="f-w-500">Description <span class="d-none d-sm-block float-sm-right">:</span></h5>
+                                    </div>
+                                    <div class="col-12 col-sm-8 col-lg-9"><span>{{page.content | safe }}</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% include 'admin-includes/footer.html' %}
+{% endblock %}

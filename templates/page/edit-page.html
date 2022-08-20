@@ -1,0 +1,88 @@
+{% include 'admin-includes/header.html' %}
+{% load static %}
+{% block content %}
+<div class="content-body">
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4 class="card-title">Update Pages</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="profile-tab">
+                            <div class="settings-form">
+                                <form id="add-page"  method="POST"
+                                    enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Title</label>
+                                            <input type="text" placeholder="Enter Title" value="{{page.title}}"
+                                                name="title" id="title" class="form-control form-control-lg" maxlength="254">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Type</label>
+                                            {% if page.type_id == 2 %}
+                                            <input type="text" class="form-control form-control-lg" readonly value="Privacy Policy">
+                                            {% elif page.type_id == 1 %}
+                                            <input type="text" class="form-control form-control-lg" readonly value="Terms & Conditions">
+                                            {% elif page.type_id == 3 %}
+                                            <input type="text" class="form-control form-control-lg" readonly value="About Us">
+                                            {% endif %}
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Description</label>
+                                            <textarea maxlength="1000" placeholder="Enter Description" id="editor" name="content"
+                                                class="form-control form-control-lg">{{page.content }}</textarea>
+                                        </div>
+                                        <input type="text" class="form-control" name="page_id" value="{{page.id}}"
+                                            hidden>
+                                        <div class="form-group col-md-12">
+                                            <button class="btn btn-primary" type="submit">Update</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'admin-includes/footer.html' %}
+{% endblock %}
+<script src="https://cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>
+<script>
+	CKEDITOR.replace('editor');
+</script>
+
+<script type="text/javascript">
+    $("#add-page").validate({
+        rules: {
+            title: {
+                required: true,
+                normalizer: function( value ) {
+                    return $.trim( value );
+                }
+            },
+            content: {
+                required: true,
+                normalizer: function( value ) {
+                    return $.trim( value );
+                }
+            }
+        },
+        messages: {
+            title: {
+                required: "Please enter title",
+            },
+            content: {
+                required: "Please enter description"
+            }
+        }
+    });
+</script>

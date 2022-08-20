@@ -1,0 +1,127 @@
+{% include 'admin-includes/header.html' %}
+{% load static %}
+{% block content %}		
+
+<div class="content-body">
+    <!-- row -->
+    <div class="container-fluid">	
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-custom">
+                    <div class="card-header d-flex justify-content-between align-items-center card-header-custom">
+                        <h4 class="card-title">Pages</h4>
+                        <div class="addlocation">
+                            <a href="{% url 'page:add_page' %}">Add<i class="far fa-plus ml-1"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <form action="{% url 'page:search_pages' %}" method="GET">
+                                <table class="sortable table table-responsive-md ">
+                                    <thead>
+                                        <tr>
+                                            <th><strong>Id</strong></th>
+                                            <th><strong>Title</strong></th>
+                                            <th><strong>Description</strong></th>
+                                            <th><strong>Type</strong></th>
+                                            <th><strong>Created On</strong></th>
+                                            <th><strong>Action</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input style="width: 70px;" type="text" value="{{id}}" class="form-control" name="id"></td>
+                                            <td><input type="text" value="{{title}}" class="form-control" name="title"></td>
+                                            <td><input type="text" value="{{content}}" class="form-control" name="content"></td>
+                                            <td>
+                                                <select class="form-control" name="type_id" onchange="this.form.submit()">
+                                                    <option  value=""></option>
+                                                    <option {% if type_id == '1' %} selected {% endif %} value="1">Terms & Conditions</option>
+                                                    <option {% if type_id == '2' %} selected {% endif %} value="2">Privacy Policy</option>
+                                                    <option {% if type_id == '3' %} selected {% endif %} value="3">About Us</option>
+                                                </select>
+                                            </td>
+                                            <td><input onchange="this.form.submit()" type="date" onkeydown="return false" value="{{created_on}}" class="position-relative form-control" name="created_on"></td>
+                                            <td><button type="submit" class="btn btn-dark savebtn">Search</button></td>
+                                        </tr>
+                                    {% if pages %}
+                                        {% for page in pages  %}
+                                            <tr>
+                                                <td>{{page.id}}</td>
+                                                <td>{{page.title}}</td>
+                                                <td>{{page.content | truncatechars:80 |safe}}</td>
+                                                {% if page.type_id == 1 %}
+                                                    <td>Terms & Conditions</td>
+                                                {% elif page.type_id == 2 %}
+                                                    <td>Privacy Policy</td>
+                                                {% elif page.type_id == 3 %}
+                                                    <td>About Us</td>
+                                                {% endif %}
+                                                <td>
+                                                    <script>
+                                                        var d = ConvertGTime("{{ page.created_on|date:'Y-m-d' }}","{{ page.created_on|time:'H:i' }}");
+                                                        document.write(d);
+                                                    </script>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a href="{% url 'page:edit_page' page.id %}" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+                                                        <a href="{% url 'page:view_page' page.id %}" class="btn btn-success shadow btn-xs sharp mr-1"><i class="fa fa-eye"></i></a>
+                                                        <a data-attr="{{page.id}}" id="delete-btn" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <td align="center" colspan="5">No Data Found</td>
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </form>
+                            {% if pages.has_other_pages %}
+							<ul class="pagination">
+								{% if pages.has_previous %}
+								<li><a href="?page={{ pages.previous_page_number }}">&laquo;</a></li>
+								{% else %}
+								<li class="disabled"><span>&laquo;</span></li>
+								{% endif %}
+								{% for i in pages.paginator.page_range %}
+								{% if pages.number == i %}
+								<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+								{% else %}
+								<li><a href="?page={{ i }}">{{ i }}</a></li>
+								{% endif %}
+								{% endfor %}
+								{% if pages.has_next %}
+								<li><a href="?page={{ pages.next_page_number }}">&raquo;</a></li>
+								{% else %}
+								<li class="disabled"><span>&raquo;</span></li>
+								{% endif %}
+							</ul>
+							{% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% include 'admin-includes/footer.html' %}
+<script>
+    $(document).on('click', '#delete-btn', function () {
+        if (confirm("Are you sure to delete this page?")) {
+            var id = $(this).attr('data-attr');
+            $.ajax({
+                url: "{% url 'page:delete_page' %}",
+                type: 'get',
+                data: {
+                    'id': id
+                },
+                success: function (result) {
+                    location.reload();
+                }
+            });
+        }
+    });
+</script>

@@ -22,52 +22,17 @@ def ChangeState(request,id):
 @login_required
 def PagesView(request):
     pages = Pages.objects.all().order_by('-updated_on')
-    return render(request, 'page/page.html',{"pages":pages,"head_title":"Pages"})
-
-
-@login_required
-def SearchPages(request):
-    if request.method == "GET":
-        try:
-            d = {
-                'id':request.GET.get("id"),
-                "title" :request.GET.get("title"),
-                "content":request.GET.get("content"),
-                "created_on":request.GET.get("created_on"),
-                "type_id":request.GET.get("type_id"),
-            }
-            syn = "SELECT * FROM tbl_page WHERE "
-            k =[]
-            query = ""
-            for i in d.keys():
-                if i == 'id' or i == 'type_id':    
-                    if d[i]:
-                        k.append(d[i])
-                        query += i + " = %s and " 
-                elif i == 'created_on':    
-                    if d[i]:
-                        k.append(d[i]+"%")
-                        query += "DATE("+i+")" + " = %s and " 
-                else:
-                    if d[i]:
-                        k.append('%'+d[i]+"%")
-                        query += i + " LIKE %s and "
-            query = query.rstrip(" and ")
-            syn += query
-            searclist=[]
-            for make in Pages.objects.raw(syn,k):
-                searclist.append(make.id)
-            pages = Pages.objects.filter(id__in = searclist).order_by('-id')
-            if not pages:
-                messages.add_message(request, messages.INFO, 'No Data Found')
-            return render(request, "page/page.html", {"pages":pages,'id':request.GET.get("id"),
-                "title" :request.GET.get("title"),
-                "content":request.GET.get("content"),
-                "created_on":request.GET.get("created_on"),
-                "type_id":request.GET.get("type_id"),"head_title":"Pages"})
-        except:
-            messages.add_message(request, messages.INFO, 'Please Enter Something To Search')
-            return redirect('page:page_list')
+    if request.GET.get('id'):
+        pages = pages.filter(id=request.GET.get('id'))
+    if request.GET.get('title'):
+        pages = pages.filter(title__icontains=request.GET.get('title'))
+    if request.GET.get('content'):
+        pages = pages.filter(content__icontains=request.GET.get('content'))
+    if request.GET.get('created_on'):
+        pages = pages.filter(created_on__date=request.GET.get('created_on'))
+    if request.GET.get('type_id'):
+        pages = pages.filter(type_id=request.GET.get('type_id'))
+    return render(request, 'page/page.html',{"pages":pages,"head_title":"Pages","id":request.GET.get('id'),"title":request.GET.get('title'),"content":request.GET.get('content'),"created_on":request.GET.get('created_on'),"type_id":request.GET.get('type_id')})
 
 
 @login_required

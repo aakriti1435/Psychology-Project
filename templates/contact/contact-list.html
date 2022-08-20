@@ -13,7 +13,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <form action="" method="GET">
+                            <form action="{% url 'contact:contacts_list' %}" method="GET">
                                 <table class="sortable table table-responsive-md ">
                                     <thead>
                                         <tr>
@@ -28,11 +28,11 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><input style="width: 70px;" type="text" value="{{id}}" class="form-control" name="id"></td>
-                                            <td><input style="width: 70px;" type="text" value="{{full_name}}" class="form-control" name="full_name"></td>
-                                            <td><input style="width: 70px;" type="text" value="{{email}}" class="form-control" name="email"></td>
-                                            <td><input style="width: 70px;" type="text" value="{{phone_number}}" class="form-control" name="phone_number"></td>
-                                            <td><input style="width: 70px;" type="text" value="{{message}}" class="form-control" name="message"></td>
+                                            <td><input style="width: 70px;" type="text" {% if id %} value="{{id}}" {% endif %} class="form-control" name="id"></td>
+                                            <td><input type="text"  {% if full_name%} value="{{full_name}}" {% endif %} class="form-control" name="full_name"></td>
+                                            <td><input type="text"  {% if email%} value="{{email}}" {% endif %} class="form-control" name="email"></td>
+                                            <td><input type="text" {% if phone_number %} value="{{phone_number}}" {% endif %} class="form-control" name="phone_number"></td>
+                                            <td><input type="text" {% if message %} value="{{message}}" {% endif %} class="form-control" name="message"></td>
                                             <td><input onchange="this.form.submit()" type="date" onkeydown="return false" value="{{created_on}}" class="position-relative form-control" name="created_on"></td>
                                             <td><button type="submit" class="btn btn-dark savebtn">Search</button></td>
                                         </tr>

@@ -9,6 +9,16 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def ServicesList(request):
 	services = Services.objects.all().order_by('-id')
+	if request.GET.get('id'):
+		services = services.filter(id=request.GET.get('id'))
+	if request.GET.get('title'):
+		services = services.filter(title__icontains=request.GET.get('title'))
+	if request.GET.get('description'):
+		services = services.filter(description__icontains=request.GET.get('description'))
+	if request.GET.get('price'):
+		services = services.filter(price__icontains=request.GET.get('price'))
+	if request.GET.get('created_on'):
+		services = services.filter(created_on__date=request.GET.get('created_on'))
 	page = request.GET.get('page', 1)
 	paginator = Paginator(services, PAGE_SIZE)
 	try:
@@ -17,7 +27,7 @@ def ServicesList(request):
 		services = paginator.page(1)
 	except EmptyPage:
 		services = paginator.page(paginator.num_pages)
-	return render(request,'services/service-list.html',{"head_title":"Services Management","services":services})
+	return render(request,'services/service-list.html',{"head_title":"Services Management","services":services,"id":request.GET.get('id'),"title":request.GET.get('title'),"description":request.GET.get('description'),"price":request.GET.get('price'),"created_on":request.GET.get('created_on')})
 
 
 @login_required

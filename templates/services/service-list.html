@@ -16,7 +16,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <form action="" method="GET">
+                            <form action="{% url 'services:services_list' %}" method="GET">
                                 <table class="sortable table table-responsive-md ">
                                     <thead>
                                         <tr>
@@ -30,10 +30,10 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><input style="width: 70px;" type="text" value="{{id}}" class="form-control" name="id"></td>
-                                            <td><input type="text" value="{{title}}" class="form-control" name="title"></td>
-                                            <td><input type="text" value="{{description}}" class="form-control" name="description"></td>
-                                            <td><input type="text" value="{{price}}" class="form-control" name="price"></td>
+                                            <td><input style="width: 70px;" type="text" {% if id %}value="{{id}}" {% endif %} class="form-control" name="id"></td>
+                                            <td><input type="text" {% if title %} value="{{title}}" {% endif %} class="form-control" name="title"></td>
+                                            <td><input type="text" {% if description %} value="{{description}}" {% endif %} class="form-control" name="description"></td>
+                                            <td><input type="text" {% if price %} value="{{price}}" {% endif %} class="form-control" name="price"></td>
                                             <td><input onchange="this.form.submit()" type="date" onkeydown="return false" value="{{created_on}}" class="position-relative form-control" name="created_on"></td>
                                             <td><button type="submit" class="btn btn-dark savebtn">Search</button></td>
                                         </tr>

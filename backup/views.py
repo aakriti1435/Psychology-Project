@@ -15,18 +15,15 @@ environ.Env.read_env()
 
 @login_required
 def backup(request):
+	backup = Backup.objects.all().order_by('-created_on')
+	page = request.GET.get('page', 1)
+	paginator = Paginator(backup, PAGE_SIZE)
 	try:
-		backup = Backup.objects.all().order_by('-created_on')
-		page = request.GET.get('page', 1)
-		paginator = Paginator(backup, PAGE_SIZE)
-		try:
-			backup = paginator.page(page)
-		except PageNotAnInteger:
-			backup = paginator.page(1)
-		except EmptyPage:
-			backup = paginator.page(paginator.num_pages)
-	except:
-		backup=None
+		backup = paginator.page(page)
+	except PageNotAnInteger:
+		backup = paginator.page(1)
+	except EmptyPage:
+		backup = paginator.page(paginator.num_pages)
 	return render(request, "backup/backup.html",{"backup":backup,"head_title":"Backup"})
 
 
@@ -35,7 +32,7 @@ def downloadFile(request):
 	BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 	path= os.path.join(BASE_DIR)
 	backup = Backup.objects.get(id=request.GET.get("id"))
-	file_name = backup.Name
+	file_name = backup.name
 	file_path = f"{path}/backup/sql_files/{file_name}"
 	filepath= file_path
 	with open(filepath, 'r') as f:
@@ -56,10 +53,11 @@ def database_backup(request):
 	TODAYBACKUPPATH = BACKUP_PATH + '/' + DATETIME
 	dumpcmd = "mysqldump -h " + "localhost" + " -u " + username + " -p" + password + " " + database + " > " + BACKUP_PATH + "/" + database+DATETIME + ".sql"
 	os.system(dumpcmd)
-	name = database+DATETIME + ".sql"
-	size = os.path.getsize(f"{path}/backup/sql_files/"+name)
-	DATETIME = time.strftime('%Y-%m-%d %H:%M:%S')
-	value = Backup.objects.create(Name=name,Size=size,created_on=DATETIME,is_schema=False)
+	value = Backup.objects.create(
+		name = database+DATETIME + ".sql",
+		size = os.path.getsize(f"{path}/backup/sql_files/"+database+DATETIME + ".sql"),
+		is_schema = False
+	)
 	messages.add_message(request, messages.INFO, 'Database backup created successfully!')
 	return redirect('backup:backup')
 
@@ -76,10 +74,11 @@ def database_schema(request):
 	TODAYBACKUPPATH = SCHEMA_PATH + '/' + DATETIME
 	dumpcmd = "mysqldump -h " + "localhost" + " -u " + username + " -p" + password + " --no-data " + database + " > " + SCHEMA_PATH + "/" + database+DATETIME + ".sql"
 	os.system(dumpcmd)
-	name= database+DATETIME + ".sql"
-	size = os.path.getsize(f"{path}/backup/sql_files/"+name)
-	DATETIME = time.strftime('%Y-%m-%d %H:%M:%S')
-	value = Backup.objects.create(Name=name,Size=size,created_on=DATETIME,is_schema=True)
+	value = Backup.objects.create(
+		name = database+DATETIME + ".sql",
+		size = os.path.getsize(f"{path}/backup/sql_files/"+database+DATETIME + ".sql"),
+		is_schema = True
+	)
 	messages.add_message(request, messages.INFO, 'Database structure created successfully!')
 	return redirect('backup:backup')
 

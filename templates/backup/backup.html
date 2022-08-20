@@ -22,7 +22,6 @@
                      <table class="sortable table table-responsive-md">
                         <thead>
                            <tr>
-
                               <th>Name</th>
                               <th>Created on</th>
                               <th>Type</th>
@@ -33,7 +32,7 @@
                            {% if backup %}
                            {% for i in backup %}
                            <tr>
-                              <td><strong>{{i.Name}}</strong></td>
+                              <td><strong>{{i.name}}</strong></td>
                               <td>
                                  <script>
                                     var d = ConvertGTime("{{ i.created_on|date:'Y-m-d' }}","{{ i.created_on|time:'H:i' }}");
@@ -41,9 +40,9 @@
                                  </script>
                               </td>
                               {% if i.is_schema %}
-                              <td><span class="btn btn-danger" style="width:145px">STRUCTURE</span></td>
+                              <td><span class="badge badge-danger" style="width:100px">STRUCTURE</span></td>
                               {% else %}
-                              <td><span class="btn btn-warning" style="width:145px">BACKUP</span></td>
+                              <td><span class="badge badge-primary" style="width:100px">BACKUP</span></td>
                               {% endif %}
                               <td>
                                  <div class="d-flex">

@@ -3317,8 +3317,8 @@ fieldset:disabled a.btn {
 
 .btn-danger {
 	color: #fff;
-	background-color: #f46b68 !important;
-	border-color: #f46b68 !important;
+	background-color: red !important;
+	border-color: red !important;
 }
 
 .btn-danger:hover {
@@ -5946,7 +5946,7 @@ a.badge-warning.focus {
 
 .badge-danger {
 	color: #fff;
-	background-color: #f46b68;
+	background-color: red;
 }
 
 a.badge-danger:hover,
@@ -11844,7 +11844,7 @@ button.bg-dark:focus {
 }
 
 .text-primary {
-	color: #ff8b11ff !important;
+	color: #21d4fd !important;
 }
 
 a.text-primary:hover,
@@ -13154,7 +13154,7 @@ a.active {
 }
 
 .footer .copyright a {
-	color: #ff8b11ff;
+	color: blue;
 }
 
 [data-sidebar-style="mini"] .nav-control,
@@ -28044,7 +28044,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 [data-primary="color_2"] .header-right .header-profile .dropdown-menu a:hover,
 [data-primary="color_2"] .header-right .header-profile .dropdown-menu a:focus,
 [data-primary="color_2"] .header-right .header-profile .dropdown-menu a.active {
-	color: #143b64;
+	color: #21d4fd;
 }
 
 [data-primary="color_2"] .header-right .header-profile .profile_title {
@@ -42751,7 +42751,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .badge-danger {
-	background-color: #f46b68;
+	background-color: red;
 }
 
 .badge-dark {
@@ -52842,13 +52842,13 @@ html[dir="rtl"]
 }
 
 .btn-primary {
-	background-color: #ff8b11ff;
-	border-color: #ff8b11ff;
+	background-color:  #21d4fd;
+	border-color:  #21d4fd;
 }
 
 .btn-primary:hover {
-	background-color: #dec446;
-	border-color: #dec446;
+	background-color:  #21d4fd;
+	border-color:  #21d4fd;
 }
 
 .icon-box i {
@@ -52879,7 +52879,7 @@ html[dir="rtl"]
 }
 
 .profile-imgbox {
-	width: 160px;
+	width: 300px;
 	max-width: 100%;
 	margin-right: 30px;
 }
@@ -52919,7 +52919,7 @@ html[dir="rtl"]
 
 .pagination li.active {
 	padding: 6px 15px;
-	background-color: #c4af4a;
+	background-color: #21d4fd;
 	color: #fff !important;
 	border-radius: 3px;
 }
@@ -52933,7 +52933,7 @@ html[dir="rtl"]
 }
 
 .header-profile .dropdown-menu a:hover {
-	color: #ff8b11;
+	color: #21d4fd;
 }
 
 /*custom file*/
@@ -53421,7 +53421,7 @@ section {
 
 .eye {
 	position: absolute;
-	top: 50px;
+	top: 55px;
 	right: 18px;
 	font-size: 16px;
 }

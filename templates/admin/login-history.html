@@ -29,7 +29,7 @@
                                         <th><strong>AGENT</strong></th>
                                         <th><strong>STATE</strong></th>
                                         <th><strong>CODE</strong></th>
-                                        <th><strong>CREATE TIME</strong></th>
+                                        <th><strong>TIME</strong></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -37,20 +37,20 @@
                                     {% for history in loginhistory %}
                                     <tr>
                                         <td>{{ history.user }}</td>
-                                        <td>{{ history.User_Ip }}</td>
-                                        <td>{{ history.User_agent }}</td>
+                                        <td>{{ history.user_ip }}</td>
+                                        <td>{{ history.user_agent }}</td>
                                         <td>
-                                            {% if history.State == "Success" %}
+                                            {% if history.status == 1 %}
                                             <p class="badge badge-success" style="width:90px;">SUCCESS</p>
                                             {% else %}
                                             <p class="badge badge-danger" style="width:90px;">FAILURE</p>
                                             {% endif %}
                                         </td>
-                                        <td>{{ history.Code }}
+                                        <td>{{ history.code }}
                                         </td>
                                         <td>
                                             <script>
-                                                var d = ConvertGTime("{{ history.create_time|date:'Y-m-d' }}","{{ history.create_time|time:'H:i' }}");
+                                                var d = ConvertGTime("{{ history.created_on|date:'Y-m-d' }}","{{ history.created_on|time:'H:i' }}");
                                                 document.write(d);
                                              </script>
                                         </td>

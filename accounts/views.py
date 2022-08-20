@@ -32,6 +32,7 @@ class LogOutView(View):
 
 class LoginView(View):
     def get(self,request,*args,**kwargs):
+        print(User.objects.get(id=1).email)
         return render(request,'frontend/login.html' , {'activated' : 'login', "title":"Login"})
     
     def post(self,request,*args,**kwargs):
@@ -70,19 +71,16 @@ def EditUser(request,id):
     if request.method == 'POST':
         if request.POST.get('username'):
             user.username = request.POST.get('username')
-        if request.POST.get('firstname'):
-            user.first_name = request.POST.get('firstname')
-        if request.POST.get('lastname'):
-            user.last_name = request.POST.get('lastname')
+        if request.POST.get('full_name'):
+            user.full_name = request.POST.get('full_name')
+        if request.POST.get('email'):
+            user.email = request.POST.get('email')
         if request.FILES.get('profile_pic'):
             user.profile_pic = request.FILES.get('profile_pic')
         user.save()
-        if user.first_name:
-            user.full_name = user.first_name + " " + user.last_name
-        user.save()
         messages.success(request, 'Profile Updated successfully')
         return redirect('accounts:view_user', id=user.id)
-    return render(request, 'users/edit-user.html',{"user":user})
+    return render(request, 'admin/edit-user.html',{"user":user})
 
 
 @login_required

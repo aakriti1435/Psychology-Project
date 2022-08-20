@@ -97,16 +97,7 @@
                                         </script>
                                     </div>
                                 </div>
-                                <div class="row mb-3 mb-sm-2">
-                                    <div class="col-12 col-sm-4 col-lg-3">
-                                        <h5 class="f-w-500">Additional Information <span class="d-none d-sm-block float-sm-right">:</span>
-                                        </h5>
-                                    </div>
-                                    <div class="col-12 col-sm-8 col-lg-9">
-                                        <span>{% if user.bio %}{{user.bio}}{% else %}-{% endif %}</span>
-                                    </div>
-                                </div>
-                                <div class="row mb-3 mb-sm-2">
+                                {% comment %} <div class="row mb-3 mb-sm-2">
                                     <div class="col-12 col-sm-4 col-lg-3">
                                         <h5 class="f-w-500">State <span class="d-none d-sm-block float-sm-right">:</span></h5>
                                     </div>
@@ -123,7 +114,7 @@
                                         <div class="btn btn-danger p-1" style="width:100px">DELETED</div>
                                     </div>
                                     {% endif %}
-                                </div>
+                                </div> {% endcomment %}
                             </div>
                         </div>
                     </div>

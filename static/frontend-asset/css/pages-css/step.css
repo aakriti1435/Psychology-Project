@@ -23,8 +23,9 @@
 }
 
 .secondary-btn {
-    background-color: #163dff;
-    border: 1px solid #f7cacb;
+    background-color: #3b7ff2;
+    background-image: linear-gradient(270deg, #3b7ff2 0%, #f462d0 100%);
+    border: 1px solid #fff;
     height: 65px;
     line-height: 42px;
     font-size: 18px;

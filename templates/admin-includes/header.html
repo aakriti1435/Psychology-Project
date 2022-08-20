@@ -77,7 +77,7 @@
         <div class="deznav">
             <div class="deznav-scroll">
                 <ul class="metismenu" id="menu">
-                    <li>
+                    <li  {% if not head_title %}class="mm-active"{% endif %}>
                         <a href="{% url 'frontend:index' %}" aria-expanded="false">
                             <i class="fas fa-tachometer-alt"></i>
                             <span class="nav-text">Dashboard</span>

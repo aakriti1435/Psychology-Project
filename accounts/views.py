@@ -83,34 +83,9 @@ def EditUser(request,id):
 
 
 @login_required
-def Allusers(request):
-    users=User.objects.all().order_by("-id").exclude(role_id=ADMIN).order_by('-id')
-    page = request.GET.get('page', 1)
-    paginator = Paginator(users, PAGE_SIZE)
-    try:
-        users = paginator.page(page)
-    except PageNotAnInteger:
-        users = paginator.page(1)
-    except EmptyPage:
-        users = paginator.page(paginator.num_pages)
-    return render(request,'users/users.html', {"users":users,"head_title":"Users"} )
-
-
-@login_required
 def ViewUser(request,id):
     user=User.objects.get(id=id)
     return render(request, 'admin/profile.html', {'user':user, "head_title":"Profile"})
-
-
-@login_required
-def DeleteUser(request):
-    user=User.objects.get(id = request.GET.get('id'))
-    if user:
-        user.state = DELETED
-        user.is_active = False
-        messages.success(request, 'User Deleted Successfully!')
-    user.save()
-    return redirect('accounts:allusers')
 
 
 class PasswordChange(View):
@@ -151,49 +126,3 @@ def DeleteHistory(request):
     else:
         messages.error(request,"Nothing to Delete!!!")
     return redirect('accounts:login_history')
-
-
-@login_required
-def UserGraph(request):
-    user = []
-    d = datetime.now().month
-    months = {'jan':'1','feb':'2','mar':'3','apr':'4','may':'5','jun':'6','jul':'7','aug':'8','sep':'9','oct':'10','nov':'11','dec':'12'}
-    for i in months.keys():
-        x = User.objects.filter(created_on__year=str(datetime.now().year),created_on__month= months[i],role_id=USER).annotate(count=Count('id')).count()
-        user.append(x)
-
-    chart = {
-        'chart': {'type': 'column'}, 
-        'title': {'text': f'Users in {datetime.now().year}'},
-        'xAxis': { 'categories': [i.upper() for i in months.keys()]},
-        'series': [
-            {
-                'name': 'Users',
-                'data':user
-            }]
-            }
-    return JsonResponse(chart)
-
-
-def EmailValidation(request):
-    if request.is_ajax():
-        data ={"valid":None,"exists":None}
-        email = request.GET.get("email")
-        email = email.lstrip()
-        email = email.rstrip()
-        pat = r'^[a-zA-Z0-9_.+-]+[@]\w+[.]\w{2,3}$'
-        match = str(re.search(pat,email))
-        try:
-            user_email = User.objects.filter(Q(state = ACTIVE)|Q(state = INACTIVE),email=email).last()
-            if email == user_email.email:
-                data['exists'] = '1'
-        except:
-            user_email = None           
-        if user_email == None:
-            data['exists'] = '0'    
-        
-        if match == "None":
-            data['valid'] = '0'
-        else:
-            data['valid'] = '1'
-        return JsonResponse(data)

@@ -5,6 +5,28 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from datetime import datetime
+from django.http import JsonResponse
+
+
+@login_required
+def ContactsGraph(request):
+    contacts = []
+    months = {'jan':'1','feb':'2','mar':'3','apr':'4','may':'5','jun':'6','jul':'7','aug':'8','sep':'9','oct':'10','nov':'11','dec':'12'}
+    for i in months.keys():
+        contacts.append(ContactUs.objects.filter(created_on__year=str(datetime.now().year),created_on__month= months[i]).count())
+
+    chart = {
+        'chart': {'type': 'column'}, 
+        'title': {'text': f'People Contacted in {datetime.now().year}'},
+        'xAxis': { 'categories': [i.upper() for i in months.keys()]},
+        'series': [
+            {
+                'name': 'Contacts',
+                'data': contacts
+            }]
+            }
+    return JsonResponse(chart)
 
 
 @login_required

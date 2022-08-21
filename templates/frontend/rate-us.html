@@ -1,0 +1,141 @@
+{% include 'frontend/includes/header.html' %} {% load static %}
+<link
+	rel="stylesheet"
+	href="{% static 'frontend-asset/css/pages-css/step.css' %}"
+/>
+<link rel="stylesheet" href="{% static 'frontend-asset/css/theme-style.css' %}" />
+<!--Home Banner Section-->
+<style>
+	.social-link li a {
+		border: 1px solid blue;
+	}
+    .step-page {
+        padding: 50px 0 !important;
+    }
+	body{
+        background-color: #dff7ff !important;
+    }
+    .form-control{
+        background-color: #fff !important;
+        background: #fff !important;
+        border: 2px solid #fff !important;
+    }
+    
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    font-size: 45px;
+    justify-content: center;
+    padding: 0 0.2em;
+    text-align: center;
+  }
+  
+  .star-rating input {
+    display:none;
+  }
+  
+  .star-rating label {
+    color:#ccc;
+    cursor:pointer;
+  }
+  
+  .star-rating :checked ~ label {
+    color:#f90;
+  }
+  
+  .star-rating label:hover,
+  .star-rating label:hover ~ label {
+    color:#fc0;
+  }
+  
+</style>
+<div class="signup-page step-page">
+	<div class="container">
+		<div class="form-wrapper text-center">
+			<h2 class="mb-3" style="color: #1126ef; font-weight:600;">We Appreciate Your Review</h2>
+			<div class="form-inner">
+				<form
+					id="rate-us"
+					method="POST"
+					class="contact-us-form login-form"
+				>
+					{% csrf_token %}
+					<div class="form-group">
+                        <label style="color: #1126ef;font-size: 19px;">Rate Our Services</label>
+						<div class="star-rating">
+                            <input type="radio" id="5-stars" name="rating" value="5" />
+                            <label for="5-stars" class="star">&#9733;</label>
+                            <input type="radio" id="4-stars" name="rating" value="4" />
+                            <label for="4-stars" class="star">&#9733;</label>
+                            <input type="radio" id="3-stars" name="rating" value="3" />
+                            <label for="3-stars" class="star">&#9733;</label>
+                            <input type="radio" id="2-stars" name="rating" value="2" />
+                            <label for="2-stars" class="star">&#9733;</label>
+                            <input type="radio" id="1-star" name="rating" value="1" />
+                            <label for="1-star" class="star">&#9733;</label>
+                          </div>
+					</div>
+                    <div class="form-group">
+						<input
+                            type="text"
+                            class="form-control"
+                            onkeypress="return /[a-zA-Z\s]/i.test(event.key)"
+                            placeholder="Enter Your Name"
+                            name="name"
+                            maxlength="50"
+                        />
+					</div>
+					<div class="form-group">
+						<textarea class="form-control" name="review" rows="4" placeholder="Please give your feedback"></textarea>
+					</div>
+					<div class="button-wrap">
+						<button class="btn btn-theme secondary-btn w-100 mt-4">
+							Submit
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% include 'frontend/includes/footer.html' %}
+<script type="text/javascript">
+	$("#rate-us").validate({
+		rules: {
+			name: {
+				required: true,
+				normalizer: function (value) {
+					return $.trim(value);
+				},
+			},
+			review: {
+				required: true,
+				normalizer: function (value) {
+					return $.trim(value);
+				},
+			},
+			rating: {
+				required: true
+			},
+		},
+		messages: {
+			name: {
+				required: "Please enter your name",
+			},
+			review: {
+				required: "Please enter a review",
+			},
+			rating: {
+				required: "Please give a rating",
+			}
+		},
+        errorPlacement: function(error, element) {
+            if (element.attr("type") == "radio"){
+                error.insertAfter($('.star-rating'));
+            }else{
+                error.insertAfter(element);
+            }
+        }
+	});
+</script>

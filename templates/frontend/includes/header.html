@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
     <meta charset="utf-8" />
@@ -23,12 +22,6 @@
         rel="stylesheet"
         href="{% static 'frontend-asset/css/helpers-plugin.css' %}"
     />
-    <!-- Style Css -->
-    {% comment %} <link
-        rel="stylesheet"
-        href="{% static 'frontend-asset/css/theme-style.css' %}"
-    /> {% endcomment %}
-    <!-- fontawesome Css -->
     <link
         rel="stylesheet"
         href="{% static 'frontend-asset/fonts/fontawesome/css/all.min.css' %}"
@@ -51,7 +44,6 @@
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
@@ -59,6 +51,9 @@
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'contact:contact_form' %}" class="nav-link smoothScroll">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'ratings:rate_us' %}" class="nav-link smoothScroll">Rate Us</a>
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'accounts:login' %}" class="nav-link smoothScroll">Login</a>

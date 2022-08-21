@@ -6,6 +6,18 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 
+def RateUsForm(request):
+	if request.method == 'POST':
+		rating = RatingReviews.objects.create(
+			rating = request.POST.get('rating') if request.POST.get('rating') else 0,
+			review = request.POST.get('review'),
+			name = request.POST.get('name')
+		)
+		messages.success(request,'Thank you for your feedback!')
+		return redirect('ratings:rate_us')
+	return render(request, 'frontend/rate-us.html')
+
+
 @login_required
 def RatingReviewsList(request):
 	ratings = RatingReviews.objects.all().order_by('-id')

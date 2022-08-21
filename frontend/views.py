@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from accounts.constants import *
 from page.models import *
+from services.models import *
 import logging
 db_logger = logging.getLogger('db')
 
@@ -10,7 +11,8 @@ def index(request):
     if request.user.is_authenticated == True and request.user.is_superuser and request.user.role_id == ADMIN:
         return redirect('admin:index')
     else:
-        return render(request, "frontend/index.html")
+        services = Services.objects.all().order_by('-id')
+        return render(request, "frontend/index.html",{"services":services})
 
 
 ## About Us Page 

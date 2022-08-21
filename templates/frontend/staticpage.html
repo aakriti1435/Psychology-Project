@@ -1,8 +1,21 @@
 {% include 'frontend/includes/header.html' %}
 {% load static %}
 <!-- Style Css -->
+<link rel="stylesheet" href="{% static 'frontend-asset/css/theme-style.css' %}" />
 <link rel="stylesheet" href="{% static 'frontend-asset/css/pages-css/about.css' %}" />
 <!--Home Banner Section-->
+<style>
+    body{
+        background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    height: auto;
+    }
+    .page-wrapper {
+        flex: 1 1 auto;
+        z-index: 1;
+    }
+</style>
 
 <section class="about-section section-ptb pb-0">
     <div class="container">

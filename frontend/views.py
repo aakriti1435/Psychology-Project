@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from accounts.constants import *
 from page.models import *
 from services.models import *
+from ratings.models import *
 import logging
 db_logger = logging.getLogger('db')
 
@@ -12,7 +13,8 @@ def index(request):
         return redirect('admin:index')
     else:
         services = Services.objects.all().order_by('-id')
-        return render(request, "frontend/index.html",{"services":services})
+        reviews = RatingReviews.objects.all().order_by('-id')
+        return render(request, "frontend/index.html",{"services":services, "reviews":reviews})
 
 
 ## About Us Page 
